@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+
+    <!-- Start Login Section-->
+    <div class="login-register-div">
+        <div class="login-register-box">
+            <h1>BookLoversApp</h1>
+
+            <!-- Start Login Form-->
+            <form method = 'post' action="{% url 'login' %}">
+                    {{ form.username.errors }}
+                    {{ form.username }}
+                    {{ form.password.errors }}
+                    {{ form.password }}
+{#                <p>#}
+{#                    <label for="id_username">Username:</label>#}
+{#                    <input type="text" placeholder="Username">#}
+{#                </p>#}
+{#                <p>#}
+{#                    <label for="id_password">Password:</label>#}
+{#                    <input type="password" placeholder="Password">#}
+{#                </p>#}
+
+                <!-- Login Button-->
+                <button type="submit">Log in</button>
+                {% csrf_token %}
+            </form>
+            <!-- End Login Form -->
+
+        </div>
+        <div class="second-option">
+
+            <!-- Link to Register Page-->
+            <p>Don't have account? <a href="{% url 'register' %}">Register</a></p>
+        </div>
+    </div>
+    <!-- End Login Section-->
+
+{% endblock %}

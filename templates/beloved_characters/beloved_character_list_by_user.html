@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+
+    <div class="container">
+        <div class="col-9">
+            <h1 class="quote-list-title">Beloved Characters List</h1>
+
+            {% if beloved_characters %}
+                <ol>
+                    {% for char in beloved_characters %}
+                        <li class="quote-list-item">Title: {{ char.name }}
+                            <p>Reason to like: {{ char.reason_to_like }}</p>
+                            <p>Favourite story: {{ char.favourite_story }}</p>
+                            <div>
+                             from book: {{ char.book.title }}
+                            </div>
+                            <a href="{% url 'edit beloved character' char.pk %}">Edit</a>
+                            <a href="{% url 'delete beloved character' char.pk %}">Delete</a>
+
+                        </li>
+                    {% endfor %}
+                </ol>
+            {% else %}
+                <h1>No characters yet!</h1>
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

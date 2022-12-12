@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+
+    <div class="container">
+        <div class="col-9">
+            <h1 class = "quote-list-title">Quotes List By User</h1>
+            {% if quotes %}
+                <ol>
+                    {% for quote in quotes %}
+                        <li class="quote-list-item">
+                            {{ quote.quote_text }}
+                            <div>
+                             quote from book: {{ quote.book.title }}
+                            </div>
+                            {% if is_owner %}
+                            <a href="{% url 'edit quote' quote.pk %}">Edit</a>
+                            <a href="{% url 'delete quote' quote.pk %}">Delete</a>
+                            {% endif %}
+
+                        </li>
+                    {% endfor %}
+                </ol>
+            {% else %}
+                <h1>No quotes yet!</h1>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

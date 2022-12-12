@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+
+
+<div class="container">
+    <div class="col-12">
+        <h1>ALL ADDED BOOKS LIST</h1>
+        {% if books %}
+            <div class="book-list">
+                {% for book in books %}
+                    <div class="pet-photos book-item">
+                        <a class="book-info-style" href="{% url 'details book'  pk=book.pk %}">
+                            <img src="{{ book.cover_photo }}" alt="pet img">
+                        </a>
+                        <div class = 'book-info-style'>Title: {{ book.title }}</div>
+                        <div class = 'book-info-style'>Author: {{ book.author }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h1>NO ADDED BOOKS YET!</h1>
+            <img src="{% static 'images/no-books-added.jpg' %}">
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

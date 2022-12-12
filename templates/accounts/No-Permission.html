@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+
+    <div class="not-found-img">
+        <img src="{% static 'images/-no-permission.jpg' %}" alt="404 not found gif">
+    </div>
+
+    <div class="not-found">
+        <h1>
+            No Permission to access this!
+        </h1>
+        <a href="{% url 'show index' %}">
+            <button>Return to BookLoversApp</button>
+        </a>
+    </div>
+
+{% endblock %}

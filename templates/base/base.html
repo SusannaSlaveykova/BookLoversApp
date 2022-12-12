@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<!-- Starts Head Section -->
+<head>
+    <link rel="stylesheet"
+          href="{% static 'css/styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/logo-with-name.png' %}">
+    <title>BookLoversApp</title>
+</head>
+<!-- End Head Section -->
+<!-- Starts Body Section -->
+<body>
+
+<!-- Starts Header Section with Navigation Bar -->
+<header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <!-- Link to Home Page -->
+                <a href="{% url 'show index' %}">
+                    <img width="50px" src="{% static 'images/logo-with-name.png' %}" alt="img1">
+                </a>
+
+                <!-- Link to Home Page -->
+                <a class="home" href="{% url 'show index' %}">
+                    <i>BookLoversApp</i>
+                </a>
+            </div>
+
+            <div class="nav-links">
+                <ul class="nav-group">
+                    <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                        <!-- Link to Add Pet Page -->
+                        <a href="{% url 'add book' %}">
+                            <i>Add Book</i>
+                        </a>
+                    </li>
+{#                    <li class="nav-item">#}
+{##}
+{#                        <!-- Link to Add Photo Page -->#}
+{#                        <a href="{% url 'add quote' %}">#}
+{#                            <i>Add Quote</i>#}
+{#                        </a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{##}
+{#                        <a href="{% url 'add beloved character' %}">#}
+{#                            <i>Add Beloved Character</i>#}
+{#                        </a>#}
+{#                    </li>#}
+                        {% else %}
+                    <li class="nav-item">
+
+                        <!-- Link to Login Page -->
+                        <a href="{% url 'login' %}">
+                            <i>Login</i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+
+                        <!-- Link to Register Page -->
+                        <a href="{% url 'register' %}">
+                            <i>Register</i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+
+                        <!-- Link to Register Page -->
+                        <a href="{% url 'details profile' pk=request.user.pk %}">
+                            <i>Profile</i>
+                        </a>
+                        <li class="nav-item">
+
+                            <!-- Link to Register Page -->
+                            <a href="{% url 'logout' %}">
+                                <i>Logout</i>
+                            </a>
+                        </li>
+                {% endif %}
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<main>
+
+    {% block page_content %}
+    {% endblock %}
+
+</main>
+<div class="footer">
+		<span class="footer-section">
+			© 2022 SOFTUNI EXAM PROJECT
+		</span>
+</div>
+<!-- End Footer Section -->
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+
+    <!-- Start Register Section -->
+    <div class="login-register-div">
+        <div class="login-register-box">
+            <h1>BookLoversApp</h1>
+
+            <!-- Start Register Form -->
+            <form method= 'post' action="{% url 'register' %}" >
+                <div>
+                    {{ form.username.errors }}
+                    {{ form.username }}
+                </div>
+
+                {{ form.email.errors }}
+                {{ form.email }}
+                {{ form.password1.errors }}
+                {{ form.password1 }}
+                {{ form.password2.errors }}
+                {{ form.password2 }}
+                {{ form.age.errors }}
+                {{ form.age }}
+                <div>
+                    {{ form.gender.errors }}
+                    {{ form.gender }}
+                </div>
+
+
+                <!-- Register Button -->
+                <button type="submit">Register</button>
+                {% csrf_token %}
+            </form>
+            <!-- End Register Form -->
+
+        </div>
+        <div class="second-option">
+
+            <!-- Link to Login Page -->
+            <p>Have an account? <a href="{% url 'login' %}">Log in</a></p>
+        </div>
+    </div>
+    <!-- End Register Section -->
+
+{% endblock %}
