@@ -1,28 +1,25 @@
 from enum import Enum
 
 from django.contrib.auth import models as auth_models
-from django.core import validators
+
+from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator, MinValueValidator, MaxValueValidator
 from django.db import models
+from django.utils.deconstruct import deconstructible
 
 from BookLoversApp.accounts.validators import validate_only_letters
 
+IMAGE_MAX_SIZE_IN_MB = 10
+@deconstructible
+class MaxFileSizeInMbValidator:
+    def __init__(self, max_size):
+        self.max_size = max_size
 
-# class ChoicesEnumMixin:
-#
-#     @classmethod
-#     def choices(cls):
-#         return [(x.name, x.value) for x in cls]
-#
-#     @classmethod
-#     def max_len(cls):
-#         return max(len(name) for name, _ in cls.choices())
+    def __call__(self, value):
+        filesize = value.file.size
 
-#
-# class Gender(ChoicesEnumMixin, Enum):
-#     male = 'Male'
-#     female = 'Female'
-#     doNotShow = 'No Information'
+        if filesize > self.max_size * 1024 * 1024:
+            raise ValidationError(f"Max file size is {self.max_size} MB")
 
 
 class AppUser(auth_models.AbstractUser):
@@ -80,5 +77,7 @@ class AppUser(auth_models.AbstractUser):
         upload_to='photos/',
         null=True,
         blank=True,
-        max_length=200
+        validators=(
+                     MaxFileSizeInMbValidator(IMAGE_MAX_SIZE_IN_MB),
+                 ),
     )

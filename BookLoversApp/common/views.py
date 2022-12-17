@@ -22,7 +22,11 @@ def index(request):
 
 @login_required(login_url='/accounts/login/')
 def add_comment(request, book_pk):
-    to_book = Book.objects.get(pk=book_pk)
+    try:
+        to_book = Book.objects.get(pk=book_pk)
+    except Book.DoesNotExist as ex:
+        return render(request, 'Errors.html')
+
     if request.method == 'GET':
         form = CommentCreateForm()
     else:
@@ -44,26 +48,32 @@ def add_comment(request, book_pk):
 
 
 def comments_by_user(request, user_pk):
-    user = UserModel.objects.get(pk=user_pk)
-    comments = user.comment_set.all().order_by('date_and_time_of_publication')
-    context = {
-        'user': user,
-        'comments': comments,
+    try:
+        user = UserModel.objects.get(pk=user_pk)
+        comments = user.comment_set.all().order_by('date_and_time_of_publication')
+        context = {
+            'user': user,
+            'comments': comments,
 
-    }
+        }
+    except UserModel.DoesNotExist as ex:
+        return render(request, 'Errors.html')
 
     return render(request, 'common/comment_list_by_user.html', context)
 
 
 def comments_by_book(request, book_pk):
-    book = Book.objects.get(pk=book_pk)
+    try:
+        book = Book.objects.get(pk=book_pk)
 
-    comments = book.comment_set.all().order_by('comment')
-    context = {
-        'book': book,
-        'comments': comments,
+        comments = book.comment_set.all().order_by('comment')
+        context = {
+            'book': book,
+            'comments': comments,
 
-    }
+        }
+    except Book.DoesNotExist as ex:
+        return render(request, 'Errors.html')
     return render(request, 'common/comment-list.html', context)
 
 

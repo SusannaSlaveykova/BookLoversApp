@@ -15,7 +15,10 @@ UserModel = get_user_model()
 
 @login_required(login_url='/accounts/login/')
 def add_beloved_character(request, book_pk):
-    to_book = Book.objects.get(pk=book_pk)
+    try:
+        to_book = Book.objects.get(pk=book_pk)
+    except Book.DoesNotExist as ex:
+        return render(request, 'Errors.html')
 
     if request.method == 'GET':
         form = FavCharCreateForm()
@@ -43,8 +46,11 @@ def add_beloved_character(request, book_pk):
 
 @login_required(login_url='/accounts/login/')
 def edit_beloved_character(request, char_pk):
-    beloved_character = BelovedCharacter.objects.get(pk=char_pk)
-    creator_of_book_id = beloved_character.user_id
+    try:
+        beloved_character = BelovedCharacter.objects.get(pk=char_pk)
+        creator_of_book_id = beloved_character.user_id
+    except BelovedCharacter.DoesNotExist as ex:
+        return render(request, 'Errors.html')
 
     if not request.user.id == creator_of_book_id:
         return redirect('no permission')
@@ -68,23 +74,30 @@ def edit_beloved_character(request, char_pk):
 
 
 def current_user_beloved_characters(request, user_pk):
-    user = UserModel.objects.get(pk=user_pk)
-    beloved_characters = user.belovedcharacter_set.all().order_by('name')
-    context = {
-        'user': user,
-        'beloved_characters': beloved_characters,
-    }
+    try:
+        user = UserModel.objects.get(pk=user_pk)
+        beloved_characters = user.belovedcharacter_set.all().order_by('name')
+        context = {
+            'user': user,
+            'beloved_characters': beloved_characters,
+        }
+    except UserModel.DoesNotExist as ex:
+        return render(request, 'Errors.html')
 
     return render(request, 'beloved_characters/beloved_character_list_by_user.html', context)
 
 
 def current_book_beloved_characters(request, book_pk):
-    book = Book.objects.get(pk=book_pk)
-    beloved_characters = book.belovedcharacter_set.all().order_by('name')
-    context = {
-        'book': book,
-        'beloved_characters': beloved_characters
-    }
+    try:
+
+        book = Book.objects.get(pk=book_pk)
+        beloved_characters = book.belovedcharacter_set.all().order_by('name')
+        context = {
+            'book': book,
+            'beloved_characters': beloved_characters
+        }
+    except Book.DoesNotExist as ex:
+        return render(request, 'Errors.html')
     return render(request, 'beloved_characters/beloved_character_list_by_book.html', context)
 
 

@@ -17,12 +17,12 @@
     <nav class="navbar">
         <div class="container">
             <div class="logo">
-                <!-- Link to Home Page -->
+
                 <a href="{% url 'show index' %}">
                     <img width="50px" src="{% static 'images/logo-with-name.png' %}" alt="img1">
                 </a>
 
-                <!-- Link to Home Page -->
+
                 <a class="home" href="{% url 'show index' %}">
                     <i>BookLoversApp</i>
                 </a>
@@ -32,28 +32,16 @@
                 <ul class="nav-group">
                     <li class="nav-item">
                     {% if request.user.is_authenticated %}
-                        <!-- Link to Add Pet Page -->
+
                         <a href="{% url 'add book' %}">
                             <i>Add Book</i>
                         </a>
                     </li>
-{#                    <li class="nav-item">#}
-{##}
-{#                        <!-- Link to Add Photo Page -->#}
-{#                        <a href="{% url 'add quote' %}">#}
-{#                            <i>Add Quote</i>#}
-{#                        </a>#}
-{#                    </li>#}
-{#                    <li class="nav-item">#}
-{##}
-{#                        <a href="{% url 'add beloved character' %}">#}
-{#                            <i>Add Beloved Character</i>#}
-{#                        </a>#}
-{#                    </li>#}
+
                         {% else %}
                     <li class="nav-item">
 
-                        <!-- Link to Login Page -->
+
                         <a href="{% url 'login' %}">
                             <i>Login</i>
                         </a>
@@ -61,7 +49,6 @@
 
                     <li class="nav-item">
 
-                        <!-- Link to Register Page -->
                         <a href="{% url 'register' %}">
                             <i>Register</i>
                         </a>
@@ -70,13 +57,13 @@
                     {% if request.user.is_authenticated %}
                         <li class="nav-item">
 
-                        <!-- Link to Register Page -->
+
                         <a href="{% url 'details profile' pk=request.user.pk %}">
                             <i>Profile</i>
                         </a>
                         <li class="nav-item">
 
-                            <!-- Link to Register Page -->
+
                             <a href="{% url 'logout' %}">
                                 <i>Logout</i>
                             </a>

@@ -7,7 +7,7 @@ UserModel = get_user_model()
 
 
 class Book(models.Model):
-    MAX_TEXT_LENGTH = 500
+    MAX_TEXT_LENGTH = 5000
     title = models.CharField(
         max_length=50,
         unique=True,
@@ -36,6 +36,8 @@ class Book(models.Model):
         null=True,
         blank=True,
 
+
     )
-    #
-    # @property
+
+    def __str__(self):
+        return f'{self.title}'

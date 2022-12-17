@@ -2,9 +2,8 @@
 {% load static %}
 {% block page_content %}
 
-    <!-- 404 page -->
     <div class="not-found-img">
-        <img src="{% static 'images/No_More_404s.gif' %}" alt="404 not found gif">
+        <img src="{% static 'images/error.gif' %}" alt="404 not found gif">
     </div>
 
     <div class="not-found">
@@ -12,11 +11,11 @@
             Uh oh,<br> something broke.
         </h1>
 
-        <h3>Error 404 - page not found.</h3>
+{#        <h3>Error 400 - bad request.</h3>#}
         <!-- Link to Home Page -->
         <a href="{% url 'show index' %}">
             <button>Return to BookLoversApp</button>
         </a>
     </div>
-    <!-- End 404 page -->
+
 {% endblock %}

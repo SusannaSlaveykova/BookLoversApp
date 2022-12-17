@@ -96,10 +96,8 @@
         <!-- Start Last Uploaded Photos Section -->
         {% for book in books %}
         <div class="pet-photos">
-
-            <!-- Link to Last Uploaded Pet Photo -->
             <a class = 'book-info-style' href="{% url 'details book'  pk=book.pk %}">
-                <!-- Pet Photo -->
+
                 <img src="{{ book.cover_photo }}"
                      alt="pet img">
 
@@ -115,9 +113,9 @@
 
         </div>
         {% endfor %}
-        <!-- End Last Uploaded Photos Section -->
+
 
     </div>
-    <!-- End Profile Details Section -->
+
 
 {% endblock %}

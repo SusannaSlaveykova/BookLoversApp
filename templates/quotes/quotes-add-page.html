@@ -1,21 +1,18 @@
 {% extends 'base/base.html' %}
 {% block page_content %}
 
-    <!-- Start Add Pet Section-->
+
     <div class="edit-delete edit-photo">
         <h2>Add favourite quote</h2>
 
-        <!-- Start Add Pet Form -->
         <form method='post' action="{% url 'add quote' to_book.pk %}">
 
             {{ form.as_p }}
-            <!-- Add Pet Button -->
+
             <button class="add-btn" type="submit">Add Quote</button>
             {% csrf_token %}
         </form>
-        <!-- End Add Pet Form -->
 
     </div>
-    <!-- End Add Pet Section -->
 
 {% endblock %}

@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
@@ -24,7 +25,7 @@ def add_book(request):
             book = form.save(commit=False)
             book.user = request.user
             book.save()
-            return redirect('details profile', pk=request.user.pk)
+            return redirect('details book', pk=book)
         else:
             return render(request, 'books/book-add-page.html', {'form': form})
 
@@ -48,9 +49,13 @@ class BookDetailsView(views.DetailView):
         return context
 
 
+
 @login_required(login_url='/accounts/login/')
 def edit_book(request, pk):
-    book = Book.objects.get(pk=pk)
+    try:
+        book = Book.objects.get(pk=pk)
+    except Book.DoesNotExist as ex:
+        return render(request, 'Errors.html')
 
     if book.user_id is not request.user.id:
         return redirect('no permission')
@@ -69,21 +74,26 @@ def edit_book(request, pk):
         book = form.save(commit=False)
         book.user = request.user
         book.save()
+
         return redirect('details profile', pk=request.user.pk)
+
     else:
         return render(request, 'books/book-edit-page.html', context)
 
 
 def added_books_by_user(request, user_pk):
-    creator_of_post = AppUser.objects.get(pk=user_pk)
-    all_books = Book.objects.all()
-    books_added_by_user = all_books.filter(user_id=creator_of_post.id)
+    try:
+        creator_of_post = AppUser.objects.get(pk=user_pk)
+        all_books = Book.objects.all()
+        books_added_by_user = all_books.filter(user_id=creator_of_post.id)
 
-    context = {
-        'books_added_by_user': books_added_by_user,
-        'user': creator_of_post,
+        context = {
+            'books_added_by_user': books_added_by_user,
+            'user': creator_of_post,
 
-    }
+        }
+    except AppUser.DoesNotExist as ex:
+        return render(request, 'Errors.html')
 
     return render(request, 'books/book_list_by_user.html', context)
 

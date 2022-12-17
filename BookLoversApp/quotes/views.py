@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
@@ -14,7 +15,10 @@ UserModel = get_user_model()
 
 @login_required(login_url='/accounts/login/')
 def add_quote(request, book_pk):
-    to_book = Book.objects.get(pk=book_pk)
+    try:
+        to_book = Book.objects.get(pk=book_pk)
+    except Book.DoesNotExist as ex:
+        return render(request, 'Errors.html')
     if request.method == 'GET':
         form = QuoteCreateForm()
     else:
@@ -36,7 +40,10 @@ def add_quote(request, book_pk):
 
 @login_required(login_url='/accounts/login/')
 def edit_quote(request, quote_pk):
-    quote = Quote.objects.get(pk=quote_pk)
+    try:
+        quote = Quote.objects.get(pk=quote_pk)
+    except Quote.DoesNotExist as ex:
+        return render(request, 'Errors.html')
 
     if quote.user_id is not request.user.id:
         return redirect('no permission')
@@ -52,8 +59,13 @@ def edit_quote(request, quote_pk):
     if form.is_valid():
         quote = form.save(commit=False)
         quote.user = request.user
-        quote.save()
-        return redirect('details profile', pk=request.user.pk)
+        try:
+            quote.save()
+            return redirect('details profile', pk=request.user.pk)
+        except Exception as ex:
+            return HttpResponse('error 400')
+
+
 
     else:
 
@@ -69,25 +81,31 @@ class DeleteQuoteView(OwnerRequiredMixin, views.DeleteView):
 
 
 def current_book_quotes(request, book_pk):
-    book = Book.objects.get(pk=book_pk)
+    try:
+        book = Book.objects.get(pk=book_pk)
 
-    quotes = book.quote_set.all().order_by('date_and_time_of_publication')
-    context = {
-        'book': book,
-        'quotes': quotes,
+        quotes = book.quote_set.all().order_by('date_and_time_of_publication')
+        context = {
+            'book': book,
+            'quotes': quotes,
 
-    }
-    return render(request, 'quotes/quotes-list.html', context)
+        }
+        return render(request, 'quotes/quotes-list.html', context)
+    except Book.DoesNotExist as ex:
+        return render(request, 'Errors.html')
 
 
 def current_user_quotes(request, user_pk):
-    user = UserModel.objects.get(pk=user_pk)
-    quotes = user.quote_set.all().order_by('date_and_time_of_publication')
-    context = {
-        'user': user,
-        'quotes': quotes,
-        'is_owner': user_pk == request.user.pk
+    try:
+        user = UserModel.objects.get(pk=user_pk)
+        quotes = user.quote_set.all().order_by('date_and_time_of_publication')
+        context = {
+            'user': user,
+            'quotes': quotes,
+            'is_owner': user_pk == request.user.pk
 
-    }
+        }
+    except UserModel.DoesNotExist as ex:
+        return render(request, 'Errors.html')
 
     return render(request, 'quotes/quotes_list_by_user.html', context)

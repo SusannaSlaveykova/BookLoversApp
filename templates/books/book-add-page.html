@@ -2,39 +2,18 @@
 {% block page_content %}
 
 
-    <!-- Start Add Pet Section-->
     <div class="edit-delete edit-photo">
         <h2>Add book</h2>
 
-        <!-- Start Add Pet Form -->
         <form method='post' action="{% url 'add book' %}">
             {{ form.as_p }}
-{#            <div>#}
-{#                {{ form.title }}#}
-{#            </div>#}
-{#            <div>#}
-{#                {{ form.author }}#}
-{#            </div>#}
-{#            <div>#}
-{#                {{ form.year_of_first_publication }}#}
-{#            </div>#}
-{#            <div>#}
-{#                {{ form.description }}#}
-{#            </div>#}
-{#            <div>#}
-{#                {{ form.cover_photo.errors }}#}
-{#            </div>#}
-{#            <div>#}
-{#                {{ form.cover_photo }}#}
-{#            </div>#}
-
 
             <button class="add-btn" type="submit">Add Book</button>
             {% csrf_token %}
         </form>
-        <!-- End Add Pet Form -->
+
 
     </div>
-    <!-- End Add Pet Section -->
+
 
 {% endblock %}

@@ -22,7 +22,7 @@ class BookCreateForm(forms.ModelForm):
             'pages': 'Pages',
             'year_of_first_publication': 'Year:',
             'cover_photo': 'URL to picture',
-            'description': 'Book description'
+            'description': 'Description'
 
         }
 

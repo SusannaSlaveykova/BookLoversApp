@@ -2,20 +2,20 @@
 {% block page_content %}
 
 
-    <!-- Start Edit Pet Section -->
+
     <div class="edit-delete edit-photo">
-        <h2>Edit Quote</h2>
-        <!-- Start Edit Pet From -->
+        <h2>Edit Comment</h2>
+
         <form method = 'post' action="{% url 'edit comment' comment.pk %}">
             {{ form }}
-{#
-            <!-- Edit Pet Button -->
+
+            <
             <button class="edit-btn" type="submit">Edit</button>
             {% csrf_token %}
         </form>
-        <!-- End Edit Pet Form -->
+
 
     </div>
-    <!-- End Edit Pet Section -->
+
 
 {% endblock %}

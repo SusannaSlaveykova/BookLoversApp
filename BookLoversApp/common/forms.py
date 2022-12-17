@@ -12,7 +12,7 @@ class CommentCreateForm(forms.ModelForm):
 
         }
         labels = {
-            'comment': "comment",
+            'comment': "Comment",
 
         }
 
@@ -26,6 +26,6 @@ class CommentEditForm(forms.ModelForm):
 
         }
         labels = {
-            'comment': "comment",
+            'comment': "Comment",
 
         }

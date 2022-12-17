@@ -1,18 +1,27 @@
-
 from django.contrib.auth import views as auth_view, get_user_model, login
-
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic as views
+# from rest_framework import generics as rest_views
+# from rest_framework import serializers
 
 from BookLoversApp.accounts.forms import SignUpForm, SignInForm, UserEditForm
 from BookLoversApp.beloved_characters.models import BelovedCharacter
 from BookLoversApp.books.models import Book
 from BookLoversApp.common.models import Comment
-from BookLoversApp.mixins.OwnerMixins import OwnerRequiredMixin, UserRequiredMixin
+from BookLoversApp.mixins.OwnerMixins import UserRequiredMixin
 from BookLoversApp.quotes.models import Quote
 
 UserModel = get_user_model()
+
+
+# class CreateUserSerializer(serializers.ModelSerializer)
+#     pass
+#
+#
+# class RegisterAPIView(rest_views.CreateAPIView):
+#     queryset = UserModel.objects.all()
+#     serializer_class = CreateUserSerializer
 
 
 class SignUpView(views.CreateView):

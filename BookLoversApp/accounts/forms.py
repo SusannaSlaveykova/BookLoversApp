@@ -35,7 +35,7 @@ class SignInForm(AuthenticationForm):
 class UserEditForm(auth_forms.UserChangeForm):
     class Meta:
         model = UserModel
-        fields = ('first_name', 'last_name', 'email', 'profile_picture', 'age', 'gender')
+        fields = ('first_name', 'last_name', 'email', 'profile_picture', 'age', 'gender', )
         field_classes = {"username": auth_forms.UsernameField}
         widgets = {
             'first_name': forms.TextInput(attrs={'placeholder': 'First name:'}),
