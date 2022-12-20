@@ -10,6 +10,8 @@ from django.utils.deconstruct import deconstructible
 from BookLoversApp.accounts.validators import validate_only_letters
 
 IMAGE_MAX_SIZE_IN_MB = 10
+
+
 @deconstructible
 class MaxFileSizeInMbValidator:
     def __init__(self, max_size):
@@ -78,6 +80,6 @@ class AppUser(auth_models.AbstractUser):
         null=True,
         blank=True,
         validators=(
-                     MaxFileSizeInMbValidator(IMAGE_MAX_SIZE_IN_MB),
-                 ),
+            MaxFileSizeInMbValidator(IMAGE_MAX_SIZE_IN_MB),
+        ),
     )

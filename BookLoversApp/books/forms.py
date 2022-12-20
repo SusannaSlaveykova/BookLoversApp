@@ -10,7 +10,7 @@ class BookCreateForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Title:'}),
             'author': forms.TextInput(attrs={'placeholder': 'Author:'}),
-            'pages': forms.TextInput(attrs={'placeholder': 'Pages:'}),
+            'pages': forms.NumberInput(attrs={'placeholder': 'Pages:'}),
             'year_of_first_publication': forms.NumberInput(attrs={'placeholder': 'Year of first publication:'}),
             'cover_photo': forms.URLInput(attrs={'placeholder': 'URL to picture:'}),
             'description': forms.Textarea(attrs={'placeholder': 'Book description:'}),

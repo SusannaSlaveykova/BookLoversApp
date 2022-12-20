@@ -25,7 +25,7 @@ def add_book(request):
             book = form.save(commit=False)
             book.user = request.user
             book.save()
-            return redirect('details book', pk=book)
+            return redirect('details book', pk=book.id)
         else:
             return render(request, 'books/book-add-page.html', {'form': form})
 
